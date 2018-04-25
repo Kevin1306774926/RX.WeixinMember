@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "微信充值";
+}
+
+<div id="login">
+    <form method="post">
+        <div id="login_penel">
+            <div class="group">
+                <label>充值:</label>
+                <input id="ChargeVal" name="ChargeVal" placeholder="单位：元" />
+            </div>
+            <div class="group">
+                    <a id="charge" href="javascript:void(0);" onclick="Charge(1)">1元</a>
+                    <a id="charge" href="javascript:void(0);" onclick="Charge(2)">2元</a>
+                    <a id="charge" href="javascript:void(0);" onclick="Charge(5)">5元</a>
+                    <a id="charge" href="javascript:void(0);" onclick="Charge(10)">10元</a>
+                    <a id="charge" href="javascript:void(0);" onclick="Charge(20)">20元</a>
+                    <a id="charge" href="javascript:void(0);" onclick="Charge(50)">50元</a>
+            </div>
+            <div>
+                <button type="button" onclick="fCharge()">立即支付</button>
+            </div>
+            <label class="errmsg">@ViewBag.Message</label>
+        </div>
+    </form>
+
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@section scripts{
+    <script type="text/javascript">
+
+        //初始化微信支付环境
+        function fCharge() {
+            var vChargeVal = $('#ChargeVal').val();
+            Charge(vChargeVal);
+        }
+
+        //提交充值数据
+        function fPostCharge(vChargeVal) {
+            vChargeVal = parseFloat(vChargeVal);
+            if (vChargeVal > 0) {
+                $.ajax({
+                    type: "post",
+                    data: "totalfee=" + vChargeVal,
+                    url: "/Pay/index",
+                    success: function (json) {
+                        onBridgeReady(json);
+                    },
+                    error: function () {
+                        $.messager.alert("提示", '调用微信支付模块失败，请稍后再试。', 'info')
+                    }
+                })
+            }
+            else {
+                alert("金额错误,请确认后再试.")
+            }
+        }
+
+        function Charge(vChargeVal) {
+            if (typeof WeixinJSBridge == "undefined") {
+                if (document.addEventListener) {
+                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                } else if (document.attachEvent) {
+                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                }
+            } else {
+                fPostCharge(vChargeVal);
+            }
+        }
+
+        //调用微信支付模块
+        function onBridgeReady(json) {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                    "appId": json.appId,     //公众号名称，由商户传入
+                    "timeStamp": json.timeStamp,         //时间戳，自1970年以来的秒数
+                    "nonceStr": json.nonceStr, //随机串
+                    "package": json.packageValue,
+                    "signType": "MD5",         //微信签名方式:
+                    "paySign": json.paySign //微信签名
+                },
+                function (res) {
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                        //alert("支付成功,请稍后查询余额,如有疑问,请联系管理员.");
+                        fAlreadyPay();
+                    }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                }
+            );
+        }
+
+    </script>
+}

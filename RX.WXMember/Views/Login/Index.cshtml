@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "登录";
+}
+<div id="login">
+    <!--登录面板-->
+    <form action="~/login/index" method="post">
+        <div id="login_penel">
+            <!--账户和密码组-->
+            <div class="group">
+                <label>账号</label>
+                <input name="userCode" placeholder="请输入账号" />
+            </div>
+            <div class="group">
+                <label>密码</label>
+                <input name="pwd" type="password" placeholder="请输入密码" />
+            </div>
+
+            <!--登录按钮	-->
+            <div>
+                <button type="submit">登录</button>
+            </div>
+            <div>
+                <a id="weixin_a" href="@ViewBag.UrlUserInfo">微信登录</a>
+            </div>
+            <label class="errmsg">@ViewBag.Message</label>
+        </div>
+    </form>
+
+</div>
+

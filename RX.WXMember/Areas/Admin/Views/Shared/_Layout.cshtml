@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>@ViewBag.Title - 瑞雪管理系统</title>
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/mobile")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body>
+    <header id="header">
+        <nav class="link">
+            <ul>
+                <li class="active"><a href=@Url.Action("index", "Home")>首页</a></li>
+                <li><a href=@Url.Action("index", "Customers")>会员</a></li>
+                <li><a href=@Url.Action("index", "RegRecords")>场地</a></li>
+                <li><a href=@Url.Action("index", "ShiftRecords")>班次</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div style="height:45px;"></div>
+
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

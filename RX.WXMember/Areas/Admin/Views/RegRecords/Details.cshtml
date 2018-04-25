@@ -1,0 +1,58 @@
+﻿@model RX.WXMember.Models.RegRecord
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RegRecord</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Record)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Record)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroundCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroundCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateUser)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

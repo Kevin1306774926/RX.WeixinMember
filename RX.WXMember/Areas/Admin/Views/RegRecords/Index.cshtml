@@ -1,0 +1,61 @@
+﻿@model PagedList.IPagedList<RX.WXMember.Models.RegRecord>
+@using PagedList.Mvc;
+@using RX.WXMember.Comm;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            记录
+        </th>
+        <th>
+            场地编号
+        </th>
+        <th>
+            注册码
+        </th>
+        <th>
+            注册时间
+        </th>
+        <th>
+            操作员
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Record)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GroundCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateUser)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+</table>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount
+    @Html.PagedListPager(Model, p => Url.Action("index", new { page = p }))

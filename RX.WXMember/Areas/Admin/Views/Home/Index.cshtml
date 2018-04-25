@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "微信管理页";
+}
+
+@*<h1>@ViewBag.Title</h1>*@
+<div id="admin_container">
+    <div id="admin_List">
+        <a href=@Url.Action("index", "Customers")>微信会员<span>@ViewBag.CustomerTotal</span></a>
+        <a href=@Url.Action("index", "RegCodes")>场地编号<span>@ViewBag.GroundCodeTotal</span></a>
+    </div>
+</div>
